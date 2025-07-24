@@ -19,6 +19,9 @@ const AppRoutes = () => {
             <Suspense fallback={<LoadingFallback />}>
                 <Routes>
 
+                    {/* Redirige la raíz al login */}
+                    <Route path="/" element={<Navigate to="/auth/login" replace />} />
+                    
                     {/* Rutas públicas */}
                     <Route 
                         element={<PublicRoute />}>

@@ -1,12 +1,13 @@
 // SidebarGraficadora.jsx
 import React, { useState } from 'react';
-import { 
+import {
   ChevronDown, ChevronRight, Square, Circle, Star, Minus,
   MoveUp, MoveDown, Layers, Trash2, Group, Ungroup, Download, Image as ImageIcon
 } from 'lucide-react';
 import { IoTriangleOutline } from "react-icons/io5";
 import { TfiText } from "react-icons/tfi";
 import { FlutterExporter } from '../../types/FlutterExporter';
+import { AngularExporter } from '../../types/AngularExporter';
 
 // Este componente representa la barra lateral izquierda del editor
 // Aquí se encuentran las herramientas, capas, y acciones para agrupar, eliminar o reordenar figuras
@@ -61,6 +62,16 @@ const SidebarGraficadora = ({
     } else {
       setSelectedShapeIds([]);
       onSelectShape(id);
+    }
+  };
+
+  // Dentro del componente SidebarGraficadora, agrega esta función:
+  const handleExportToAngular = async () => {
+    try {
+      const exporter = new AngularExporter('my-angular-project');
+      await exporter.exportToAngular(shapes);
+    } catch (error) {
+      console.error('Error al exportar a Angular:', error);
     }
   };
 
@@ -129,149 +140,186 @@ const SidebarGraficadora = ({
 
   const loginModern = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 812, fill: "#F3F6FD" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#F3F6FD" },
     // Card central
-    { type: "rectangle", x: 32, y: 180, width: 311, height: 370, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1, rotation: 0 },
+    { type: "rectangle", x: 400, y: 180, width: 400, height: 440, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1, rotation: 0 },
     // Título
-    { type: "text", x: 60, y: 210, text: "Iniciar Sesión", fontSize: 28, fill: "#1976D2", fontFamily: "Arial", width: 250, height: 40 },
+    { type: "text", x: 480, y: 220, text: "Iniciar Sesión", fontSize: 40, fill: "#1976D2", fontFamily: "Arial", width: 300, height: 50 },
     // Input Email
-    { type: "rectangle", x: 60, y: 270, width: 255, height: 44, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
-    { type: "text", x: 70, y: 282, text: "Correo electrónico", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 20 },
+    { type: "rectangle", x: 480, y: 300, width: 320, height: 54, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
+    { type: "text", x: 490, y: 315, text: "Correo electrónico", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 30 },
     // Input Password
-    { type: "rectangle", x: 60, y: 330, width: 255, height: 44, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
-    { type: "text", x: 70, y: 342, text: "Contraseña", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 20 },
+    { type: "rectangle", x: 480, y: 370, width: 320, height: 54, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
+    { type: "text", x: 490, y: 385, text: "Contraseña", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 30 },
     // Botón
-    { type: "rectangle", x: 60, y: 400, width: 255, height: 48, fill: "#1976D2", stroke: "#1976D2", strokeWidth: 1 },
-    { type: "text", x: 140, y: 414, text: "Entrar", fontSize: 18, fill: "#FFFFFF", fontFamily: "Arial", width: 100, height: 24 },
+    { type: "rectangle", x: 480, y: 450, width: 320, height: 54, fill: "#1976D2", stroke: "#1976D2", strokeWidth: 1 },
+    { type: "text", x: 570, y: 465, text: "Entrar", fontSize: 22, fill: "#FFFFFF", fontFamily: "Arial", width: 120, height: 30 },
     // Link Olvidaste tu contraseña
-    { type: "text", x: 120, y: 470, text: "¿Olvidaste tu contraseña?", fontSize: 14, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 20 }
+    { type: "text", x: 540, y: 530, text: "¿Olvidaste tu contraseña?", fontSize: 18, fill: "#1976D2", fontFamily: "Arial", width: 300, height: 30 }
   ];
 
   const dashboardSimple = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 812, fill: "#F3F6FD" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#F3F6FD" },
     // Barra superior
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 70, fill: "#1976D2" },
-    { type: "text", x: 24, y: 24, text: "Dashboard", fontSize: 24, fill: "#FFFFFF", fontFamily: "Arial", width: 200, height: 30 },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 90, fill: "#1976D2" },
+    { type: "text", x: 40, y: 30, text: "Dashboard", fontSize: 36, fill: "#FFFFFF", fontFamily: "Arial", width: 400, height: 50 },
     // Card 1
-    { type: "rectangle", x: 24, y: 100, width: 327, height: 120, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1, rotation: 0 },
-    { type: "text", x: 40, y: 120, text: "Bienvenido 👋", fontSize: 20, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 30 },
-    { type: "text", x: 40, y: 150, text: "Este es tu panel principal.", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 24 },
+    { type: "rectangle", x: 60, y: 120, width: 520, height: 180, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1, rotation: 0 },
+    { type: "text", x: 90, y: 150, text: "Bienvenido 👋", fontSize: 28, fill: "#1976D2", fontFamily: "Arial", width: 400, height: 50 },
+    { type: "text", x: 90, y: 190, text: "Este es tu panel principal.", fontSize: 22, fill: "#7B809A", fontFamily: "Arial", width: 400, height: 40 },
     // Card 2
-    { type: "rectangle", x: 24, y: 240, width: 327, height: 120, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1, rotation: 0 },
-    { type: "text", x: 40, y: 260, text: "Tareas", fontSize: 18, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 30 },
-    { type: "text", x: 40, y: 290, text: "No tienes tareas pendientes.", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 24 }
+    { type: "rectangle", x: 60, y: 320, width: 520, height: 180, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1, rotation: 0 },
+    { type: "text", x: 90, y: 350, text: "Tareas", fontSize: 24, fill: "#1976D2", fontFamily: "Arial", width: 400, height: 40 },
+    { type: "text", x: 90, y: 390, text: "No tienes tareas pendientes.", fontSize: 22, fill: "#7B809A", fontFamily: "Arial", width: 400, height: 40 }
   ];
 
   const signupModern = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 812, fill: "#F3F6FD" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#F3F6FD" },
     // Card central
-    { type: "rectangle", x: 32, y: 120, width: 311, height: 500, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1 },
+    { type: "rectangle", x: 400, y: 100, width: 400, height: 600, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1 },
     // Título
-    { type: "text", x: 60, y: 150, text: "Crear Cuenta", fontSize: 28, fill: "#1976D2", fontFamily: "Arial", width: 250, height: 40 },
+    { type: "text", x: 480, y: 140, text: "Crear Cuenta", fontSize: 40, fill: "#1976D2", fontFamily: "Arial", width: 300, height: 50 },
     // Input Nombre
-    { type: "rectangle", x: 60, y: 210, width: 255, height: 44, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
-    { type: "text", x: 70, y: 222, text: "Nombre completo", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 20 },
+    { type: "rectangle", x: 480, y: 210, width: 320, height: 54, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
+    { type: "text", x: 490, y: 225, text: "Nombre completo", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 30 },
     // Input Email
-    { type: "rectangle", x: 60, y: 270, width: 255, height: 44, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
-    { type: "text", x: 70, y: 282, text: "Correo electrónico", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 20 },
+    { type: "rectangle", x: 480, y: 280, width: 320, height: 54, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
+    { type: "text", x: 490, y: 295, text: "Correo electrónico", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 30 },
     // Input Password
-    { type: "rectangle", x: 60, y: 330, width: 255, height: 44, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
-    { type: "text", x: 70, y: 342, text: "Contraseña", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 20 },
+    { type: "rectangle", x: 480, y: 350, width: 320, height: 54, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
+    { type: "text", x: 490, y: 365, text: "Contraseña", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 30 },
     // Input Confirmar Password
-    { type: "rectangle", x: 60, y: 390, width: 255, height: 44, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
-    { type: "text", x: 70, y: 402, text: "Confirmar contraseña", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 20 },
+    { type: "rectangle", x: 480, y: 420, width: 320, height: 54, fill: "#F5F7FA", stroke: "#B0B8C1", strokeWidth: 1 },
+    { type: "text", x: 490, y: 435, text: "Confirmar contraseña", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 30 },
     // Botón
-    { type: "rectangle", x: 60, y: 460, width: 255, height: 48, fill: "#1976D2", stroke: "#1976D2", strokeWidth: 1 },
-    { type: "text", x: 120, y: 474, text: "Registrarse", fontSize: 18, fill: "#FFFFFF", fontFamily: "Arial", width: 150, height: 24 },
+    { type: "rectangle", x: 480, y: 500, width: 320, height: 54, fill: "#1976D2", stroke: "#1976D2", strokeWidth: 1 },
+    { type: "text", x: 540, y: 515, text: "Registrarse", fontSize: 22, fill: "#FFFFFF", fontFamily: "Arial", width: 200, height: 30 },
     // Link ya tienes cuenta
-    { type: "text", x: 100, y: 520, text: "¿Ya tienes cuenta? Inicia sesión", fontSize: 14, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 20 }
+    { type: "text", x: 520, y: 570, text: "¿Ya tienes cuenta? Inicia sesión", fontSize: 18, fill: "#1976D2", fontFamily: "Arial", width: 300, height: 30 }
   ];
 
   const userProfile = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 812, fill: "#F3F6FD" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#F3F6FD" },
     // Header
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 180, fill: "#1976D2" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 220, fill: "#1976D2" },
     // Avatar (círculo)
-    { type: "circle", x: 137, y: 60, width: 100, height: 100, fill: "#FFFFFF", stroke: "#B0B8C1", strokeWidth: 2 },
+    { type: "circle", x: 550, y: 60, width: 120, height: 120, fill: "#FFFFFF", stroke: "#B0B8C1", strokeWidth: 2 },
     // Nombre
-    { type: "text", x: 100, y: 180, text: "Nombre de Usuario", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 30 },
+    { type: "text", x: 500, y: 200, text: "Nombre de Usuario", fontSize: 32, fill: "#1976D2", fontFamily: "Arial", width: 300, height: 40 },
     // Email
-    { type: "text", x: 100, y: 210, text: "usuario@email.com", fontSize: 16, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 24 },
+    { type: "text", x: 500, y: 250, text: "usuario@email.com", fontSize: 22, fill: "#7B809A", fontFamily: "Arial", width: 300, height: 30 },
     // Botón Editar
-    { type: "rectangle", x: 120, y: 260, width: 135, height: 40, fill: "#1976D2", stroke: "#1976D2", strokeWidth: 1 },
-    { type: "text", x: 150, y: 270, text: "Editar Perfil", fontSize: 16, fill: "#FFFFFF", fontFamily: "Arial", width: 100, height: 24 }
+    { type: "rectangle", x: 540, y: 300, width: 180, height: 50, fill: "#1976D2", stroke: "#1976D2", strokeWidth: 1 },
+    { type: "text", x: 580, y: 315, text: "Editar Perfil", fontSize: 22, fill: "#FFFFFF", fontFamily: "Arial", width: 120, height: 30 }
   ];
 
   const cardList = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 812, fill: "#F3F6FD" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#F3F6FD" },
     // Título
-    { type: "text", x: 24, y: 24, text: "Mis Elementos", fontSize: 24, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 30 },
+    { type: "text", x: 40, y: 40, text: "Mis Elementos", fontSize: 36, fill: "#1976D2", fontFamily: "Arial", width: 400, height: 50 },
     // Card 1
-    { type: "rectangle", x: 24, y: 80, width: 327, height: 80, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1 },
-    { type: "text", x: 40, y: 100, text: "Elemento 1", fontSize: 18, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 30 },
-    { type: "text", x: 40, y: 130, text: "Descripción corta...", fontSize: 14, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 24 },
+    { type: "rectangle", x: 60, y: 120, width: 520, height: 120, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1 },
+    { type: "text", x: 90, y: 150, text: "Elemento 1", fontSize: 28, fill: "#1976D2", fontFamily: "Arial", width: 400, height: 40 },
+    { type: "text", x: 90, y: 190, text: "Descripción corta...", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 400, height: 30 },
     // Card 2
-    { type: "rectangle", x: 24, y: 180, width: 327, height: 80, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1 },
-    { type: "text", x: 40, y: 200, text: "Elemento 2", fontSize: 18, fill: "#1976D2", fontFamily: "Arial", width: 200, height: 30 },
-    { type: "text", x: 40, y: 230, text: "Otra descripción...", fontSize: 14, fill: "#7B809A", fontFamily: "Arial", width: 250, height: 24 }
+    { type: "rectangle", x: 60, y: 260, width: 520, height: 120, fill: "#FFFFFF", stroke: "#E0E3EB", strokeWidth: 1 },
+    { type: "text", x: 90, y: 290, text: "Elemento 2", fontSize: 28, fill: "#1976D2", fontFamily: "Arial", width: 400, height: 40 },
+    { type: "text", x: 90, y: 330, text: "Otra descripción...", fontSize: 20, fill: "#7B809A", fontFamily: "Arial", width: 400, height: 30 }
   ];
 
   const splashScreen = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 812, fill: "#1976D2" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#1976D2" },
     // Logo (círculo)
-    { type: "circle", x: 137, y: 250, width: 100, height: 100, fill: "#FFFFFF" },
+    { type: "circle", x: 550, y: 250, width: 120, height: 120, fill: "#FFFFFF" },
     // Título
-    { type: "text", x: 80, y: 380, text: "Mi App Móvil", fontSize: 32, fill: "#FFFFFF", fontFamily: "Arial", width: 250, height: 40 },
+    { type: "text", x: 400, y: 420, text: "Mi App Móvil", fontSize: 48, fill: "#FFFFFF", fontFamily: "Arial", width: 400, height: 60 },
     // Subtítulo
-    { type: "text", x: 100, y: 430, text: "¡Bienvenido!", fontSize: 20, fill: "#F3F6FD", fontFamily: "Arial", width: 200, height: 30 }
+    { type: "text", x: 480, y: 500, text: "¡Bienvenido!", fontSize: 32, fill: "#F3F6FD", fontFamily: "Arial", width: 300, height: 40 }
   ];
 
   const emptyState = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 812, fill: "#F3F6FD" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#F3F6FD" },
     // Icono (círculo)
-    { type: "circle", x: 137, y: 250, width: 100, height: 100, fill: "#E0E3EB" },
+    { type: "circle", x: 550, y: 250, width: 120, height: 120, fill: "#E0E3EB" },
     // Título
-    { type: "text", x: 80, y: 380, text: "Sin resultados", fontSize: 28, fill: "#1976D2", fontFamily: "Arial", width: 250, height: 40 },
+    { type: "text", x: 400, y: 420, text: "Sin resultados", fontSize: 40, fill: "#1976D2", fontFamily: "Arial", width: 400, height: 60 },
     // Subtítulo
-    { type: "text", x: 100, y: 430, text: "No se encontraron datos.", fontSize: 18, fill: "#7B809A", fontFamily: "Arial", width: 200, height: 30 }
+    { type: "text", x: 480, y: 500, text: "No se encontraron datos.", fontSize: 28, fill: "#7B809A", fontFamily: "Arial", width: 300, height: 40 }
   ];
 
   const calendarTemplate = [
     // Fondo
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 500, fill: "#F3F6FD" },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 800, fill: "#F3F6FD" },
     // Cabecera
-    { type: "rectangle", x: 0, y: 0, width: 375, height: 70, fill: "#1976D2" },
-    { type: "text", x: 140, y: 20, text: "Mayo 2024", fontSize: 22, fill: "#FFFFFF", fontFamily: "Arial", width: 120, height: 30 },
+    { type: "rectangle", x: 0, y: 0, width: 1200, height: 90, fill: "#1976D2" },
+    { type: "text", x: 540, y: 30, text: "Mayo 2024", fontSize: 32, fill: "#FFFFFF", fontFamily: "Arial", width: 200, height: 40 },
     // Botón anterior
-    { type: "rectangle", x: 20, y: 20, width: 30, height: 30, fill: "#1565C0" },
-    { type: "text", x: 28, y: 25, text: "<", fontSize: 20, fill: "#FFFFFF", fontFamily: "Arial", width: 20, height: 20 },
+    { type: "rectangle", x: 60, y: 30, width: 40, height: 40, fill: "#1565C0" },
+    { type: "text", x: 75, y: 38, text: "<", fontSize: 28, fill: "#FFFFFF", fontFamily: "Arial", width: 30, height: 30 },
     // Botón siguiente
-    { type: "rectangle", x: 325, y: 20, width: 30, height: 30, fill: "#1565C0" },
-    { type: "text", x: 335, y: 25, text: ">", fontSize: 20, fill: "#FFFFFF", fontFamily: "Arial", width: 20, height: 20 },
+    { type: "rectangle", x: 1100, y: 30, width: 40, height: 40, fill: "#1565C0" },
+    { type: "text", x: 1115, y: 38, text: ">", fontSize: 28, fill: "#FFFFFF", fontFamily: "Arial", width: 30, height: 30 },
     // Días de la semana
-    { type: "text", x: 30, y: 80, text: "L", fontSize: 16, fill: "#1976D2", fontFamily: "Arial", width: 20, height: 20 },
-    { type: "text", x: 75, y: 80, text: "M", fontSize: 16, fill: "#1976D2", fontFamily: "Arial", width: 20, height: 20 },
-    { type: "text", x: 120, y: 80, text: "M", fontSize: 16, fill: "#1976D2", fontFamily: "Arial", width: 20, height: 20 },
-    { type: "text", x: 165, y: 80, text: "J", fontSize: 16, fill: "#1976D2", fontFamily: "Arial", width: 20, height: 20 },
-    { type: "text", x: 210, y: 80, text: "V", fontSize: 16, fill: "#1976D2", fontFamily: "Arial", width: 20, height: 20 },
-    { type: "text", x: 255, y: 80, text: "S", fontSize: 16, fill: "#1976D2", fontFamily: "Arial", width: 20, height: 20 },
-    { type: "text", x: 300, y: 80, text: "D", fontSize: 16, fill: "#1976D2", fontFamily: "Arial", width: 20, height: 20 },
+    { type: "text", x: 100, y: 110, text: "L", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 30, height: 30 },
+    { type: "text", x: 220, y: 110, text: "M", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 30, height: 30 },
+    { type: "text", x: 340, y: 110, text: "M", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 30, height: 30 },
+    { type: "text", x: 460, y: 110, text: "J", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 30, height: 30 },
+    { type: "text", x: 580, y: 110, text: "V", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 30, height: 30 },
+    { type: "text", x: 700, y: 110, text: "S", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 30, height: 30 },
+    { type: "text", x: 820, y: 110, text: "D", fontSize: 22, fill: "#1976D2", fontFamily: "Arial", width: 30, height: 30 },
     // Celdas de días (5 filas x 7 columnas)
     ...Array.from({ length: 5 }).flatMap((_, row) =>
       Array.from({ length: 7 }).map((_, col) => {
         const dayNum = row * 7 + col + 1;
         return [
-          { type: "rectangle", x: 20 + col * 45, y: 110 + row * 45, width: 40, height: 40, fill: "#FFFFFF", stroke: "#B0B8C1", strokeWidth: 1 },
-          { type: "text", x: 35 + col * 45, y: 120 + row * 45, text: String(dayNum <= 31 ? dayNum : ''), fontSize: 16, fill: "#333333", fontFamily: "Arial", width: 20, height: 20 }
+          { type: "rectangle", x: 100 + col * 120, y: 150 + row * 100, width: 100, height: 80, fill: "#FFFFFF", stroke: "#B0B8C1", strokeWidth: 1 },
+          { type: "text", x: 140 + col * 120, y: 170 + row * 100, text: String(dayNum <= 31 ? dayNum : ''), fontSize: 22, fill: "#333333", fontFamily: "Arial", width: 40, height: 30 }
         ];
       })
     ).flat()
+  ];
+
+  const umlClassTemplate = [
+    // Fondo de la clase
+    { type: "rectangle", x: 400, y: 200, width: 300, height: 160, fill: "#FFFFFF", stroke: "#1976D2", strokeWidth: 2 },
+    // Línea separadora entre nombre y atributos
+    { type: "line", x: 400, y: 240, x2: 700, y2: 240, stroke: "#1976D2", strokeWidth: 2 },
+    // Nombre de la clase
+    { type: "text", x: 420, y: 210, text: "NombreClase", fontSize: 24, fill: "#1976D2", fontFamily: "Arial", width: 260, height: 30 },
+    // Atributos
+    { type: "text", x: 420, y: 250, text: "+ atributo1: Tipo", fontSize: 18, fill: "#333", fontFamily: "Arial", width: 260, height: 24 },
+    { type: "text", x: 420, y: 280, text: "- atributo2: Tipo", fontSize: 18, fill: "#333", fontFamily: "Arial", width: 260, height: 24 },
+    { type: "text", x: 420, y: 310, text: "# atributo3: Tipo", fontSize: 18, fill: "#333", fontFamily: "Arial", width: 260, height: 24 }
+  ];
+
+  const umlRelationsTemplate = [
+    // Clase base
+    { type: "rectangle", x: 200, y: 100, width: 200, height: 60, fill: "#FFF", stroke: "#1976D2", strokeWidth: 2 },
+    { type: "text", x: 220, y: 120, text: "Animal", fontSize: 20, fill: "#1976D2", fontFamily: "Arial", width: 160, height: 30 },
+
+    // Clase derivada (herencia)
+    { type: "rectangle", x: 100, y: 250, width: 200, height: 60, fill: "#FFF", stroke: "#1976D2", strokeWidth: 2 },
+    { type: "text", x: 120, y: 270, text: "Perro", fontSize: 20, fill: "#1976D2", fontFamily: "Arial", width: 160, height: 30 },
+    // Línea de herencia (flecha vacía)
+    { type: "line", x: 200, y: 160, x2: 200, y2: 250, stroke: "#1976D2", strokeWidth: 2, markerEnd: "arrow" },
+
+    // Clase composición
+    { type: "rectangle", x: 400, y: 250, width: 200, height: 60, fill: "#FFF", stroke: "#1976D2", strokeWidth: 2 },
+    { type: "text", x: 420, y: 270, text: "Collar", fontSize: 20, fill: "#1976D2", fontFamily: "Arial", width: 160, height: 30 },
+    // Línea de composición (rombo relleno)
+    { type: "line", x: 300, y: 280, x2: 400, y2: 280, stroke: "#1976D2", strokeWidth: 2, markerEnd: "diamond" },
+
+    // Clase asociación
+    { type: "rectangle", x: 700, y: 250, width: 200, height: 60, fill: "#FFF", stroke: "#1976D2", strokeWidth: 2 },
+    { type: "text", x: 720, y: 270, text: "Veterinario", fontSize: 20, fill: "#1976D2", fontFamily: "Arial", width: 160, height: 30 },
+    // Línea de asociación (línea simple con círculo)
+    { type: "line", x: 300, y: 310, x2: 700, y2: 280, stroke: "#1976D2", strokeWidth: 2, markerEnd: "circle" }
   ];
 
   const templates = {
@@ -283,6 +331,8 @@ const SidebarGraficadora = ({
     splash: splashScreen,
     empty: emptyState,
     calendar: calendarTemplate,
+    umlClass: umlClassTemplate,
+    umlRelations: umlRelationsTemplate,
     // ...otros
   };
 
@@ -327,6 +377,8 @@ const SidebarGraficadora = ({
           <button className="p-2 bg-blue-700 text-white rounded hover:bg-blue-800" onClick={() => handleInsertTemplate('splash')}>Pantalla de Bienvenida</button>
           <button className="p-2 bg-blue-700 text-white rounded hover:bg-blue-800" onClick={() => handleInsertTemplate('empty')}>Estado Vacío</button>
           <button className="p-2 bg-blue-700 text-white rounded hover:bg-blue-800" onClick={() => handleInsertTemplate('calendar')}>Calendario</button>
+          <button className="p-2 bg-blue-700 text-white rounded hover:bg-blue-800" onClick={() => handleInsertTemplate('umlClass')}>Clase UML</button>
+          <button className="p-2 bg-blue-700 text-white rounded hover:bg-blue-800" onClick={() => handleInsertTemplate('umlRelations')}>Relaciones UML</button>
         </div>
       </div>
 
@@ -373,8 +425,17 @@ const SidebarGraficadora = ({
           </label>
         </div>
         <button className="export-button text-gray-500 border border-gray-300 hover:bg-white p-1 rounded-2xl" onClick={handleExport} title="Exportar a Flutter">
-          <Download size={18} className="flex justify-center mx-auto"/>
+          <Download size={18} className="flex justify-center mx-auto" />
           <span>Exportar a Flutter</span>
+        </button>
+
+        <button
+          className="export-button text-gray-500 border border-gray-300 hover:bg-white p-1 rounded-2xl"
+          onClick={handleExportToAngular}
+          title="Exportar a Angular"
+        >
+          <Download size={18} className="flex justify-center mx-auto" />
+          <span>Exportar a Angular</span>
         </button>
       </div>
 
